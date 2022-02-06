@@ -1,0 +1,24 @@
+.App {
+  text-align: center;
+}
+
+.addExpense{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-left:35%;
+  margin-top:15vh;
+  overflow:hidden
+}
+
+.h1-addIncome,.h1-addExpense{
+  display: flex;
+  margin:2%;
+  padding-left: 2%;
+}
+
+.expense-header{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
