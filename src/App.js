@@ -13,10 +13,11 @@ import {NotFound} from './routes/NotFound';
 import { AddIncome} from './routes/AddIncome';
 import {Report} from './routes/Report'
 import {AddExpense} from './routes/AddExpense';
+import {MaterialUIPickers} from './routes/date'
 
 function App() {
 
-  const [appMode,setAppMode] = useState('light');
+  const [appMode,setAppMode] = useState('dark');
   const history = useHistory();
   const theme = createTheme({
     palette: {
@@ -101,6 +102,9 @@ function App() {
         </Route>
         <Route path="/report">
           <Report />
+        </Route>
+        <Route path="/date">
+          <MaterialUIPickers />
         </Route>
        
         <Route exact path ="/">

@@ -1,58 +1,85 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import {useFormik} from  "formik";
 import * as yup from 'yup';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DateTimePicker from '@mui/lab/DateTimePicker';
+import DesktopDatePicker  from '@mui/lab/DesktopDatePicker';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import FormHelperText from '@mui/material/FormHelperText';
+import { useHistory } from 'react-router-dom';
+import {API} from './global';
 
-function BasicDateTimePicker() {
-  const [date, setDate] = React.useState(new Date());
 
-  return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-
-      <DateTimePicker
-      className='date'
-        id="date"
-        name="date"
-        renderInput={(props) => <TextField {...props} sx={{width: '30%'}}/>}
-        label="Date Time"
-        value={date}
-        onChange={(newValue) => {
-          setDate(newValue);
-        }}
-      />
-    </LocalizationProvider>
-  );
-}
 const formValidationSchema = yup.object({
     desc: yup.string().required("Mandatory Field").min(5,"please tell us more").max(15,"Max char value is 15"),
-    amount : yup.number().required("Mandatory Field"),
-    date : yup.date().required("Mandatory Field"),
-    category:yup.string().required("Mandatory Field").max(10,"Max 10 Characters"),
-    divison: yup.string().required("Mandatory Field").max(10,"Max 10 Characters")
+    amount : yup.number().required("Mandatory Field").positive(),
+    category:yup.string().required("Mandatory Field"),
+    division: yup.string().required("Mandatory Field")
   })
 
 export function AddExpense(){
 
-    const {handleSubmit,values,handleBlur,handleChange,errors,touched} = useFormik({
-        initialValues:{desc:"",value:"",category:"",division:""},
-        validationSchema:formValidationSchema,
-        onSubmit:(result)=>{
-         console.log(result)
-        }
-      })
+    const formik = useFormik({
+      initialValues:{desc:"",amount:"",date:new Date(),category:"",division:"",type:"expense"},
+      validationSchema:formValidationSchema,
 
-   
-    const history = useHistory();
-    const new_style = { width: '30%' };
+
+      onSubmit:(result)=>{
+
+      // change the date format
+      let d =  result.date ;
+      result.date = `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`;
+
+      //checking if any white space is there in amount and removing 
+      let n = result.amount;
+      result.amount = n.replace(/\s/g, "");
+      
+      console.log((result))
+      addExpenseDetails(result);
+      }
+    })
+  
+  const new_style = { width: '30%' };
+  const [dateState, setDateState] = React.useState(new Date());
+  const [category,setCategory] = React.useState('');
+  const [division,setDivision] = React.useState('');
+  
+  const dateHandleChange = (newValue) => {
+    setDateState(newValue);
+    formik.setFieldValue(`date`,newValue);
+  };
+
+  const categoryHandleChange = (event) => {
+    setCategory(event.target.value);
+    formik.setFieldValue(`category`,event.target.value);
+  };
+
+  const divisionHandleChange = (event) => {
+    setDivision(event.target.value);
+    formik.setFieldValue(`division`,event.target.value);
+  };
+
+  const history = useHistory();
+
+  const addExpenseDetails =(newExpense)=>{
+
+    fetch(`${API}/track`,{
+      method: 'POST',
+      body : JSON.stringify([newExpense]),
+      headers : {'content-type':'application/json'}
+    })
+    .then(()=>history.push(`/report`));
+  }
+
     return(
         
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
         
         <div className="addExpense">
             <div className='expense-header'>
@@ -62,53 +89,113 @@ export function AddExpense(){
         <TextField
             id="desc"
             name="desc"
-            value={values.desc}
-            onChange={handleChange}
+            defaultValue={formik.values.desc}
+            onChange={formik.handleChange}
             label="Description"
             variant="outlined"
-            onBlur={handleBlur}
+            onBlur={formik.handleBlur}
             style={new_style} 
-            error={errors.desc && touched.desc}
-            helperText = {errors.desc && touched.desc ? errors.desc : ""}/>
+            error={formik.errors.desc && formik.touched.desc}
+            helperText = {formik.errors.desc && formik.touched.desc ? formik.errors.desc : ""}/>
         
           <TextField
             id="amount"
             name="amount"
-            value={values.amount}
-            onChange={handleChange}
+            defaultValue={formik.values.amount}
+            onChange={formik.handleChange}
             label="Amount"
             variant="outlined"
-            onBlur={handleBlur}
+            onBlur={formik.handleBlur}
             style={new_style} 
-            error={errors.amount && touched.amount}
-            helperText = {errors.amount && touched.amount ? errors.amount : ""}/>
+            error={formik.errors.amount && formik.touched.amount}
+            helperText = {formik.errors.amount && formik.touched.amount ? formik.errors.amount : ""}/>
          
-          <BasicDateTimePicker />
-          <TextField
+         <LocalizationProvider dateAdapter={AdapterDateFns}>
+
+            <DesktopDatePicker
+              className='date'
+              id="date"
+              name="date"
+              label="Date"
+              variant="outlined"
+              inputFormat="MM/dd/yyyy"
+              value={dateState}
+              style={new_style} 
+              onBlur={formik.handleBlur}
+              renderInput={(params) => <TextField {...params} sx={new_style}/>}
+              onChange={dateHandleChange} 
+              error={formik.errors.date && formik.touched.date}
+              helperText = {formik.errors.date && formik.touched.date ? formik.errors.date : ""}
+            />
+            </LocalizationProvider>
+
+            <FormControl >
+              <InputLabel id="category">Category</InputLabel>
+              <Select
+                labelId="category"
+                id="category"
+                value={category}
+                label="Category"
+                name="category"
+                onChange={categoryHandleChange}
+                onBlur={formik.handleBlur}
+                style={new_style} 
+                error={formik.errors.category && formik.touched.category}
+                
+              >
+              
+                <MenuItem value={'Fuel'}>Fuel</MenuItem>
+                <MenuItem value={'Movie'}>Movie</MenuItem>
+                <MenuItem value={'Food'}>Food</MenuItem>
+                <MenuItem value={'Loan'}>Loan</MenuItem>
+                <MenuItem value={'Medical'}>Medical</MenuItem>
+                <MenuItem value={'Others'}>Others</MenuItem>
+              </Select>
+              <FormHelperText>{formik.errors.category && formik.touched.category ? formik.errors.category : ""}</FormHelperText>
+            </FormControl>
+          {/* <TextField
             id="category"
             name="category"
-            value={values.category}
-            onChange={handleChange}
+            defaultValue={formik.values.category}
+            onChange={formik.handleChange}
             label="Category"
             variant="outlined"
-            onBlur={handleBlur}
+            onBlur={formik.handleBlur}
             style={new_style} 
             placeholder="fuel/movie/food/loa/medical/etc.."
-            error={errors.category && touched.category}
-            helperText = {errors.category && touched.category ? errors.category : ""}/>
+            error={formik.errors.category && formik.touched.category}
+            helperText = {formik.errors.category && formik.touched.category ? formik.errors.category : ""}/> */}
 
-            <TextField
+            <FormControl >
+              <InputLabel id="division">Division</InputLabel>
+              <Select
+                labelId="division"
+                id="division"
+                value={division}
+                label="Division"
+                name="division"
+                onChange={divisionHandleChange}
+                onBlur={formik.handleBlur}
+                style={new_style} 
+                error={formik.errors.division && formik.touched.division}
+              >
+                <MenuItem value={'Personal'}>Personal</MenuItem>
+                <MenuItem value={'Office'}>Office</MenuItem>
+              </Select>
+              <FormHelperText>{formik.errors.division && formik.touched.division ? formik.errors.division : ""}</FormHelperText>
+            </FormControl>
+            {/* <TextField
             id="division"
             name="division"
-            value={values.division}
-            onChange={handleChange}
+            value={formik.values.division}
+            onChange={formik.handleChange}
             label="Division"
             variant="outlined"
-            onBlur={handleBlur}
+            onBlur={formik.handleBlur}
             placeholder="Personal/Office"
             style={new_style} 
-            error={errors.division && touched.division}
-            helperText = {errors.division && touched.division ? errors.division : ""}/>
+            error={formik.errors.division && formik.touched.division}
+            helperText = {formik.errors.division && formik.touched.division ? formik.errors.division : ""}/> */}
           
           {/* Using button from Material  */}
       <Button variant="contained" type="submit" style={new_style} className="formButton">Add Expense</Button>
