@@ -22,3 +22,26 @@
   flex-wrap: wrap;
   align-items: center;
 }
+
+.income_title{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.incomeIcon{
+  margin-top:2%;
+}
+
+.dataTable{
+  margin:5%;
+}
+
+.MuiDataGrid-renderingZone, .MuiDataGrid-root .MuiDataGrid-row  .MuiDataGrid-columnHeaders{
+  padding: 0px 20px;
+  text-align: center;
+  justify-content: center;
+}
+
+.MuiDataGrid-columnHeadersInner{
+  text-align: center;
+}

@@ -8,6 +8,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker  from '@mui/lab/DesktopDatePicker';
 import {API} from './global';
 import { useHistory } from 'react-router-dom';
+import AddCardIcon from '@mui/icons-material/AddCard';
 
 // function BasicDateTimePicker() {
  
@@ -25,7 +26,7 @@ const formValidationSchema = yup.object({
 export function AddIncome(){
 
     const formik = useFormik({
-        initialValues:{desc:"",amount:"",date:new Date(),type:"income"},
+        initialValues:{desc:"",amount:"",date:new Date(),category:null,division:null,type:"Income"},
         validationSchema:formValidationSchema,
         onSubmit:(result)=>{
 
@@ -33,9 +34,10 @@ export function AddIncome(){
           let d =  result.date ;
           result.date = `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`;
           
-          //checking if any white space is there in amount and removing 
+          //checking if any white space is there in amount and removing ;converting the string to number
           let n = result.amount;
           result.amount = n.replace(/\s/g, "");
+          result.amount = parseFloat(result.amount);
 
           console.log(result);
          addIncomeDetails(result);
@@ -66,7 +68,11 @@ export function AddIncome(){
      
         <form onSubmit={formik.handleSubmit}>
         <div className="addExpense">
-        <h1 className='h1-addIncome'>Add Income</h1>
+        <div className='income_title'>
+          <h1 className='h1-addIncome'>Add Income </h1>
+          <AddCardIcon className='incomeIcon'fontSize='large'/>
+        </div>
+        
         <TextField
             id="desc"
             name="desc"
