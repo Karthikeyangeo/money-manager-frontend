@@ -124,7 +124,7 @@ export function Report(){
         })
         .then(response => response.json())
         .then( res =>{
-        //   console.log(res);
+         console.log(res);
           setAmtData(res);
         })
         .catch( err => console.log(err));
