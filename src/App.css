@@ -45,3 +45,8 @@
 .MuiDataGrid-columnHeadersInner{
   text-align: center;
 }
+
+.sum{
+  display: flex;
+  flex-direction: column;
+}
