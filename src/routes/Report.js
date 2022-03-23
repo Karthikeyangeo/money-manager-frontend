@@ -2,6 +2,9 @@ import * as React from 'react';
 import { useState ,useEffect} from 'react';
 import {API,rows} from './global';
 import { DataGrid } from '@mui/x-data-grid';
+import Button from '@mui/material/Button';
+
+
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -28,13 +31,17 @@ export function Report(){
 
     const incomeArray = amtData.filter(x=>x.type ==='Income');
     const incomeTotal = incomeArray.map(x =>x.amount).reduce((a,b)=>a+b,0);
+
     const expenseArray = amtData.filter(x=>x.type ==='Expense');
     const expenseTotal = expenseArray.map(x =>x.amount).reduce((a,b)=>a+b,0);
+
+    const fullTotal = incomeTotal + expenseTotal;
     console.log(`incomeTotal`,incomeTotal)
     console.log(`income`,incomeArray)
     console.log(`expense`,expenseArray)
     console.log(`expensetotal`,expenseTotal)
-
+    
+    
     let getAmt = async () =>{
         await fetch(`${API}/track`,{
             method : 'GET'
@@ -57,16 +64,21 @@ export function Report(){
             getRowId={(r) => r._id}
             rows={amtData}
             columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
             
             />
             </div>
         </div>  
         <div className='sum'>
-          Total sum = {incomeTotal+ expenseTotal}
-          Income Total = {incomeTotal}
-          Expense Total = {expenseTotal}
+          <Button 
+            style={{ textTransform : 'none'}}
+            variant="outlined" 
+            className='totalbtn'>
+              Full Total<br /> {fullTotal}
+          </Button>
+          <Button style={{ textTransform : 'none'}} variant="outlined" className='totalbtn' color='success'>Income Total<br /> {incomeTotal}</Button>
+          <Button style={{ textTransform : 'none'}}variant="outlined" className='totalbtn' color='error'>Expense Total<br /> {expenseTotal}</Button>
         </div>
       </div>
         

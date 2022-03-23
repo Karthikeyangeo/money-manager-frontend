@@ -17,7 +17,7 @@ import {MaterialUIPickers} from './routes/date'
 
 function App() {
 
-  const [appMode,setAppMode] = useState('dark');
+  const [appMode,setAppMode] = useState('light');
   const history = useHistory();
   const theme = createTheme({
     palette: {
