@@ -41,7 +41,7 @@ export function Report(){
     console.log(`expense`,expenseArray)
     console.log(`expensetotal`,expenseTotal)
     
-    
+  
     let getAmt = async () =>{
         await fetch(`${API}/track`,{
             method : 'GET'
@@ -71,14 +71,9 @@ export function Report(){
             </div>
         </div>  
         <div className='sum'>
-          <Button 
-            style={{ textTransform : 'none'}}
-            variant="outlined" 
-            className='totalbtn'>
-              Full Total<br /> {fullTotal}
-          </Button>
-          <Button style={{ textTransform : 'none'}} variant="outlined" className='totalbtn' color='success'>Income Total<br /> {incomeTotal}</Button>
-          <Button style={{ textTransform : 'none'}}variant="outlined" className='totalbtn' color='error'>Expense Total<br /> {expenseTotal}</Button>
+          {/* .toLocaleString('en-IN') is used to convert the number to Indian Metric system */}
+          <Button style={{ textTransform : 'none'}} variant="outlined" className='totalbtn' color='success'>Income Total<br /> {incomeTotal.toLocaleString('en-IN')}</Button>
+          <Button style={{ textTransform : 'none'}}variant="outlined" className='totalbtn' color='error'>Expense Total<br /> {expenseTotal.toLocaleString('en-IN')}</Button>
         </div>
       </div>
         
