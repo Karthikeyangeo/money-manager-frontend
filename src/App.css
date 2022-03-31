@@ -35,17 +35,25 @@
 .dataTable{
   margin:5%;
 }
-
-.MuiDataGrid-renderingZone, .MuiDataGrid-root .MuiDataGrid-row  .MuiDataGrid-columnHeaders{
+.css-1fajery-MuiDataGrid-root .MuiDataGrid-cell--textRight{
+  justify-content: center;
+}
+.css-1fajery-MuiDataGrid-root .MuiDataGrid-columnHeaderTitleContainer ,.MuiDataGrid-cellContent{
   padding: 0px 20px;
   text-align: center;
   justify-content: center;
 }
 
-.MuiDataGrid-columnHeadersInner{
+/* .css-1fajery-MuiDataGrid-root .MuiDataGrid-cellContent{
+  padding: 0px 20px;
   text-align: center;
+  justify-content: center;
+} */
+.MuiDataGrid-colCellTitle {
+  display: block;
+  text-align:center;
+  width: 100%;
 }
-
 .sum{
   display: flex;
   justify-content: center;

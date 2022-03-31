@@ -120,8 +120,7 @@ export function AddIncome(){
           {/* Using button from Material  */}
       <Button variant="contained" type="submit" style={new_style} className="formButton">Add Income</Button>
         </div>
-        </form>
-        
+        </form>       
         
     )
 
