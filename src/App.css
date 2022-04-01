@@ -35,20 +35,16 @@
 .dataTable{
   margin:5%;
 }
-.css-1fajery-MuiDataGrid-root .MuiDataGrid-cell--textRight{
+/* .css-1fajery-MuiDataGrid-root .MuiDataGrid-cell--textRight{
   justify-content: center;
-}
+} */
 .css-1fajery-MuiDataGrid-root .MuiDataGrid-columnHeaderTitleContainer ,.MuiDataGrid-cellContent{
   padding: 0px 20px;
   text-align: center;
   justify-content: center;
 }
 
-/* .css-1fajery-MuiDataGrid-root .MuiDataGrid-cellContent{
-  padding: 0px 20px;
-  text-align: center;
-  justify-content: center;
-} */
+
 .MuiDataGrid-colCellTitle {
   display: block;
   text-align:center;

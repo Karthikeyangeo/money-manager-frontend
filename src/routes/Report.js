@@ -3,11 +3,27 @@ import { useState ,useEffect} from 'react';
 import {API} from './global';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
+import EditIcon from '@mui/icons-material/Edit';
+import { FormControlLabel, IconButton } from '@material-ui/core';
 
 
 
+const Edit = ({ index }) => {
+
+  const handleEditClick = () => {
+      console.log(index)
+  }
 
 
+  return <FormControlLabel
+             control={
+                 <IconButton  aria-label="Edit Icon" onClick={handleEditClick} >
+                     <EditIcon  />
+                 </IconButton>
+             }
+         />
+         
+};
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'type', headerName: 'Type', width: 130 },
@@ -21,6 +37,20 @@ const columns = [
     },
     { field: 'category', headerName: 'Category', width: 130 },
     { field: 'division', headerName: 'Description', width: 130 },
+    {
+      field: "edit",
+      headerName: "Edit",
+      sortable: false,
+      width: 140,
+      disableClickEventBubbling: true,
+      renderCell: (params) => {
+          return (
+              <div  style={{ cursor: "pointer" }}>
+                  <Edit index={params.row.id} />
+               </div>
+          );
+       }
+    }
     
   ];
   
