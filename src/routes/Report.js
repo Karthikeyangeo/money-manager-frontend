@@ -153,19 +153,13 @@ import Paper from '@mui/material/Paper';
     console.log(`expense`,expenseArray)
     console.log(`expensetotal`,expenseTotal)
     
-  
-    // const getAmt = async () =>{
-    //     await fetch(`${API}/track`,{
-    //         method : 'GET'
-    //     })
-    //     .then(response => response.json())
-    //     .then( res =>{
-    //      console.log(res);
-    //       setAmtData(res);
-    //     })
-    //     .catch( err => console.log(err));
-    // }
-    
+    const handleEditClick = ({index}) => {
+      console.log(index)}
+    // const Edit = ({ index }) => {
+
+    //     const handleEditClick = () => {
+    //         console.log(index)
+    //     }}
     useEffect(()=>{
       async function getAmt(){
         await fetch(`${API}/track`,{
@@ -188,7 +182,7 @@ import Paper from '@mui/material/Paper';
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
+            
             <TableCell align="right">ID</TableCell>
             <TableCell align="right">Type&nbsp;(g)</TableCell>
             <TableCell align="right">Date&nbsp;(g)</TableCell>
@@ -199,19 +193,23 @@ import Paper from '@mui/material/Paper';
           </TableRow>
         </TableHead>
         <TableBody>
-          {amtData.map((row) => (
+          {amtData.map((row,index) => (
             <TableRow
-              key={row.name}
+              key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.id}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-              
+              <TableCell align="right">{row.type}</TableCell>
+              <TableCell align="right">{row.date}</TableCell>
+              <TableCell align="right">{row.desc}</TableCell>
+              <TableCell align="right">{row.amount}</TableCell>
+              <TableCell align="right">{row.category}</TableCell>
+              <TableCell align="right">{row.division}</TableCell>
+              <IconButton  aria-label="Edit Icon" onClick={()=>{console.log(index)}} >
+              <EditIcon/>
+             </IconButton>
             </TableRow>
           ))}
         </TableBody>
