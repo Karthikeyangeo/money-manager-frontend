@@ -14,6 +14,7 @@ import { AddIncome} from './routes/AddIncome';
 import {Report} from './routes/Report'
 import {AddExpense} from './routes/AddExpense';
 import {MaterialUIPickers} from './routes/date'
+import{ReportTable} from './routes/table'
 
 function App() {
 
@@ -70,7 +71,7 @@ function App() {
             color="inherit"
             aria-label="Report"
             sx={{ mr: 2 }}
-            onClick = {()=> history.push('/report')}
+            onClick = {()=> history.push('/table')}
           >
             Report
           </IconButton>
@@ -105,6 +106,9 @@ function App() {
         </Route>
         <Route path="/date">
           <MaterialUIPickers />
+        </Route>
+        <Route path="/table">
+          <ReportTable />
         </Route>
        
         <Route exact path ="/">

@@ -154,18 +154,7 @@ export function AddExpense(){
               </Select>
               <FormHelperText>{formik.errors.category && formik.touched.category ? formik.errors.category : ""}</FormHelperText>
             </FormControl>
-          {/* <TextField
-            id="category"
-            name="category"
-            defaultValue={formik.values.category}
-            onChange={formik.handleChange}
-            label="Category"
-            variant="outlined"
-            onBlur={formik.handleBlur}
-            style={new_style} 
-            placeholder="fuel/movie/food/loa/medical/etc.."
-            error={formik.errors.category && formik.touched.category}
-            helperText = {formik.errors.category && formik.touched.category ? formik.errors.category : ""}/> */}
+          
 
             <FormControl >
               <InputLabel id="division">Division</InputLabel>
@@ -185,18 +174,7 @@ export function AddExpense(){
               </Select>
               <FormHelperText>{formik.errors.division && formik.touched.division ? formik.errors.division : ""}</FormHelperText>
             </FormControl>
-            {/* <TextField
-            id="division"
-            name="division"
-            value={formik.values.division}
-            onChange={formik.handleChange}
-            label="Division"
-            variant="outlined"
-            onBlur={formik.handleBlur}
-            placeholder="Personal/Office"
-            style={new_style} 
-            error={formik.errors.division && formik.touched.division}
-            helperText = {formik.errors.division && formik.touched.division ? formik.errors.division : ""}/> */}
+           
           
           {/* Using button from Material  */}
       <Button variant="contained" type="submit" style={new_style} className="formButton">Add Expense</Button>
