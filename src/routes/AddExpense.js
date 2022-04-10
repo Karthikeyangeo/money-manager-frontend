@@ -75,7 +75,7 @@ export function AddExpense(){
       body : JSON.stringify([newExpense]),
       headers : {'content-type':'application/json'}
     })
-    .then(()=>history.push(`/report`));
+    .then(()=>history.push(`/table`));
   }
 
     return(

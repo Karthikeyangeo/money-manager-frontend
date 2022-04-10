@@ -7,16 +7,21 @@ import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
-
-
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
  function ReportTable(){
-
+  const history = useHistory();
     const EditButton = (params) => {
         return (
             <strong>
-                <IconButton onClick={()=> console.log(params.row._id)} sx={{m: 5}}>
+                <IconButton onClick={()=> {
+                  let id=params.row._id;
+                  console.log(id)
+                  history.push(`/track/edit/${id}`)
+                }}
+                
+                sx={{m: 5}}>
                 <EditIcon  color='primary'/>
               </IconButton>
             </strong>

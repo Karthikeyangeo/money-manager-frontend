@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import {useFormik} from  "formik";
@@ -7,7 +7,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker  from '@mui/lab/DesktopDatePicker';
 import {API} from './global';
-import { useHistory } from 'react-router-dom';
+import { useHistory ,useParams} from 'react-router-dom';
 import AddCardIcon from '@mui/icons-material/AddCard';
 
 // function BasicDateTimePicker() {
@@ -23,10 +23,40 @@ const formValidationSchema = yup.object({
     
   })
 
-export function AddIncome(){
+export function EditIncome(){
+    const {id} =useParams();
+    const [selectedIncome,setSelectedIncome]= useState(null);
 
+    
+    useEffect( ()=>{
+        async function getIncome(){
+            await fetch(`${API}/track/${id}`,{
+                method:'GET'
+            })
+            .then((data)=>data.json())
+            .then((selecteddata)=> setSelectedIncome(selecteddata))
+        }
+        getIncome()        
+    },[]);
+    console.log('SelectedIncome',selectedIncome);
+    return selectedIncome ? <UpdateIncome selectedIncome={selectedIncome} /> : " " ;
+    
+}
+
+
+function UpdateIncome(selectedIncome){
+   
+    console.log('amt',selectedIncome.amount)
     const formik = useFormik({
-        initialValues:{desc:"",amount:"",date:new Date(),category:null,division:null,type:"Income"},
+        initialValues:{
+            desc:selectedIncome.desc,
+            amount:selectedIncome.amount,
+            date:new Date(),
+            category:null,
+            division:null,
+            type:"Income"
+        },
+        enableReinitialize:true,
         validationSchema:formValidationSchema,
         onSubmit:(result)=>{
 
@@ -40,7 +70,7 @@ export function AddIncome(){
           result.amount = parseFloat(result.amount);
 
           console.log(result);
-         addIncomeDetails(result);
+          editIncomeDetails(result);
         }
       })
     
@@ -53,11 +83,11 @@ export function AddIncome(){
 
     const history = useHistory();
 
-    const addIncomeDetails = (newIncome) =>{
+    const editIncomeDetails = (updIncome) =>{
 
-      fetch(`${API}/track`,{
-        method : "POST",
-        body : JSON.stringify([newIncome]),
+      fetch(`${API}/track/${selectedIncome._id}`,{
+        method : "PUT",
+        body : JSON.stringify([updIncome]),
         headers : {'content-type':'application/json'}
       })
       .then(()=> history.push(`/table`))
@@ -69,7 +99,7 @@ export function AddIncome(){
         <form onSubmit={formik.handleSubmit}>
         <div className="addExpense">
         <div className='income_title'>
-          <h1 className='h1-addIncome'>Add Income </h1>
+          <h1 className='h1-addIncome'>Edit Income </h1>
           <AddCardIcon className='incomeIcon'fontSize='large'/>
         </div>
         
@@ -118,7 +148,7 @@ export function AddIncome(){
          
           
           {/* Using button from Material  */}
-      <Button variant="contained" type="submit" style={new_style} className="formButton">Add Income</Button>
+      <Button variant="contained" type="submit" style={new_style} className="formButton">Save Income</Button>
         </div>
         </form>       
         

@@ -15,6 +15,7 @@ import {Report} from './routes/Report'
 import {AddExpense} from './routes/AddExpense';
 import {MaterialUIPickers} from './routes/date'
 import{ReportTable} from './routes/table'
+import {EditIncome} from './routes/EditIncome';
 
 function App() {
 
@@ -109,6 +110,10 @@ function App() {
         </Route>
         <Route path="/table">
           <ReportTable />
+        </Route>
+
+        <Route path="/track/edit/:id">
+          <EditIncome />
         </Route>
        
         <Route exact path ="/">
