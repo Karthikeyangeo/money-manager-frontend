@@ -40,7 +40,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'type', headerName: 'Type', width: 130 },
-        { field: 'date', headerName: 'Date', width: 130 , sortable: false},
+        { field: 'displayDate', headerName: 'Date', width: 130 , sortable: false},
         { field: 'desc', headerName: 'Description', width: 130 },
         {
           field: 'amount',

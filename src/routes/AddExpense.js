@@ -26,7 +26,7 @@ const formValidationSchema = yup.object({
 export function AddExpense(){
 
     const formik = useFormik({
-      initialValues:{desc:"",amount:"",date:new Date(),category:"",division:"",type:"Expense"},
+      initialValues:{desc:"",amount:"",date:new Date(),displayDate:'',category:"",division:"",type:"Expense"},
       validationSchema:formValidationSchema,
 
 
@@ -34,7 +34,7 @@ export function AddExpense(){
 
       // change the date format
       let d =  result.date ;
-      result.date = `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`;
+      result.displayDate = `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`;
 
       //checking if any white space is there in amount and removing ; converting the string to number
       let n = result.amount;

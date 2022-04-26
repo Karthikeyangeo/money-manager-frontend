@@ -38,6 +38,7 @@ export function EditIncome(){
         }
         getIncome()        
     },[]);
+  
     console.log('SelectedIncome',selectedIncome);
     return selectedIncome ? <UpdateIncome selectedIncome={selectedIncome} /> : " " ;
     
@@ -46,23 +47,25 @@ export function EditIncome(){
 
 function UpdateIncome(selectedIncome){
    
-    console.log('amt',selectedIncome.amount)
+    console.log('success',selectedIncome)
+   
     const formik = useFormik({
         initialValues:{
             desc:selectedIncome.desc,
             amount:selectedIncome.amount,
-            date:new Date(),
+            date:selectedIncome.date,
+            displayDate:selectedIncome.displayDate,
             category:null,
             division:null,
             type:"Income"
         },
-        enableReinitialize:true,
+        // enableReinitialize:true,
         validationSchema:formValidationSchema,
         onSubmit:(result)=>{
 
           // change the date format
           let d =  result.date ;
-          result.date = `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`;
+          result.displayDate = `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`;
           
           //checking if any white space is there in amount and removing ;converting the string to number
           let n = result.amount;
@@ -75,7 +78,7 @@ function UpdateIncome(selectedIncome){
       })
     
     const new_style = { width: '30%' };
-    const [dateState, setDateState] = React.useState(new Date());
+    const [dateState, setDateState] = React.useState(selectedIncome.date);
     const dateHandleChange = (newValue) => {
       setDateState(newValue);
       formik.setFieldValue(`date`,newValue);
