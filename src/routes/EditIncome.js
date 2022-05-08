@@ -9,6 +9,8 @@ import DesktopDatePicker  from '@mui/lab/DesktopDatePicker';
 import {API} from './global';
 import { useHistory ,useParams} from 'react-router-dom';
 import AddCardIcon from '@mui/icons-material/AddCard';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // function BasicDateTimePicker() {
  
@@ -40,7 +42,14 @@ export function EditIncome(){
     },[]);
   
     console.log('SelectedIncome',selectedIncome);
-    return selectedIncome ? <UpdateIncome selectedIncome={selectedIncome} /> : " " ;
+    return selectedIncome ? <UpdateIncome selectedIncome={selectedIncome} /> 
+                          :<Backdrop
+                              sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                              open>
+                              <CircularProgress color="inherit" />
+                            </Backdrop>
+                          
+                          ;
     
 }
 
