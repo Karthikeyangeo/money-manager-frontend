@@ -102,9 +102,9 @@ function App() {
           {/* Matcht url display the below component */}
           <AddExpense />
         </Route>
-        <Route path="/report">
+        {/* <Route path="/report">
           <Report />
-        </Route>
+        </Route> */}
         <Route path="/date">
           <MaterialUIPickers />
         </Route>

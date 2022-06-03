@@ -50,7 +50,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
         },
         { field: 'category', headerName: 'Category', width: 130 },
         { field: 'division', headerName: 'Description', width: 130 },
-        {field:'edit',headerName:'Edit',width:130,renderCell: EditButton},
+        // {field:'edit',headerName:'Edit',width:130,renderCell: EditButton},
         {field:'delete',headerName:'Delete',width:130,renderCell: DeleteButton}
         
       ];
